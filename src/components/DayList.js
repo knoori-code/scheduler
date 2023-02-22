@@ -20,4 +20,4 @@ export default function DayList({ days, setDay, day}) {
       {parsedDays}
     </ul>
   );
-} 
+}  
