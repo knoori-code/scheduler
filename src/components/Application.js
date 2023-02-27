@@ -35,6 +35,29 @@ export default function Application(props) {
     });
   }, []);
 
+  // console.log(state)
+  // if id of appointment and interview info is known, can edit appointments object
+
+  function bookInterview(id, interview) {
+    // console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    
+    return Axios.put(`/api/appointments/${id}`, {interview})
+    .then(() => {
+      setState({ ...state, appointments });  
+      })
+      
+  }
+
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
@@ -44,9 +67,11 @@ export default function Application(props) {
     return (
       <Appointment
         key={appointment.id}
+        id={appointment.id}
         {...appointment}
         interview={interview}
         interviewers={interviewers}
+        bookInterview={bookInterview} // Passing to appt to be used in save()
       />
     );
   });
