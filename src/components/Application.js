@@ -49,13 +49,25 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment,
     };
+    return Axios.put(`/api/appointments/${id}`, { interview }).then(() => {
+      setState({ ...state, appointments });
+    });
+  }
 
-    
-    return Axios.put(`/api/appointments/${id}`, {interview})
-    .then(() => {
-      setState({ ...state, appointments });  
-      })
-      
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    return Axios.delete(`/api/appointments/${id}`).then(() => {
+      setState({ ...state, appointments });
+    });
   }
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -72,6 +84,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview} // Passing to appt to be used in save()
+        cancelInterview={cancelInterview}
       />
     );
   });
