@@ -6,6 +6,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 export default function Appointment(props) {
@@ -19,6 +20,8 @@ export default function Appointment(props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
@@ -29,12 +32,18 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-    bookInterview(id, interview).then(() => transition(SHOW));
+
+    bookInterview(id, interview)
+      .then(() => transition(SHOW))
+      .catch(() => transition(ERROR_SAVE, true));
   }
 
   function confirm() {
-    transition(DELETING);
-    cancelInterview(id).then(() => transition(EMPTY));
+    transition(DELETING, true);
+
+    cancelInterview(id)
+      .then(() => transition(EMPTY))
+      .catch(() => transition(ERROR_DELETE, true));
   }
 
   function deleteAppointment() {
@@ -49,13 +58,14 @@ export default function Appointment(props) {
         <Show
           student={interview.student}
           interviewer={interview.interviewer}
-          onDelete={() => transition(CONFIRM)}
+          onDelete={deleteAppointment}
           onEdit={() => transition(EDIT)}
         />
       )}
       {mode === CONFIRM && (
         <Confirm
           onConfirm={confirm}
+          onCancel={back}
           message={"Are you sure you would like to Delete?"}
         />
       )}
@@ -73,6 +83,8 @@ export default function Appointment(props) {
       )}
       {mode === SAVING && <Status message={"SAVING"} />}
       {mode === DELETING && <Status message={"DELETING"} />}
+      {mode === ERROR_SAVE && <Error message={"Could not save the appointment"} onClose={back} />}
+      {mode === ERROR_DELETE && <Error message={"Could not delete the appointment"} onClose={back} />}
     </article>
   );
 }
