@@ -13,10 +13,11 @@ export default function useApplicationData() {
 
   useEffect(() => {
     Promise.all([
-      Axios.get("api/days"),
-      Axios.get("api/appointments"),
-      Axios.get("api/interviewers"),
+      Axios.get("/api/days"),
+      Axios.get("/api/appointments"),
+      Axios.get("/api/interviewers"),
     ]).then((all) => {
+      console.log(all)
       setState((prev) => ({
         ...prev,
         days: all[0].data,
