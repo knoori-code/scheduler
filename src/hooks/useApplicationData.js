@@ -59,10 +59,5 @@ export default function useApplicationData() {
     });
   }
 
-  function spotsRemaining() {
-    
-  }
-
-
   return { state, setDay, bookInterview, cancelInterview };
 }
