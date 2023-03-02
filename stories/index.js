@@ -144,9 +144,9 @@ storiesOf("Appointment", module)
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Header", () => <Header time="12pm" />)
-  .add("Empty", () => <Empty onAdd={action("onAdd")}/>)
+  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
   .add("Show", () => (
-    <Show 
+    <Show
       student="Lydia Miller-Jones"
       interviewer={interviewers[0]}
       onEdit={action("onEdit")}
@@ -154,16 +154,18 @@ storiesOf("Appointment", module)
     />
   ))
   .add("Confirm", () => (
-    <Confirm 
+    <Confirm
       message="Delete the Appointment"
       onConfirm={action("onConfirm")}
       onCancel={action("onCancel")}
     />
   ))
   .add("Status", () => <Status message="Deleting" />)
-  .add("Error", () => <Error message="Could not delete appointment" onClose={action("onClose")} />)
+  .add("Error", () => (
+    <Error message="Could not delete appointment" onClose={action("onClose")} />
+  ))
   .add("Form Edit", () => (
-    <Form  
+    <Form
       student="Khalid Noori"
       interviewer={1}
       interviewers={interviewers}
@@ -172,7 +174,7 @@ storiesOf("Appointment", module)
     />
   ))
   .add("Form Create", () => (
-    <Form  
+    <Form
       interviewers={interviewers}
       onSave={action("onSave")}
       onCancel={action("onCancel")}
@@ -193,4 +195,4 @@ storiesOf("Appointment", module)
       />
       <Appointment time="5pm" />
     </Fragment>
-  ))
+  ));

@@ -28,19 +28,25 @@ export default function useApplicationData() {
 
   const updateSpots = (state) => {
     const currentDay = state.days.find((day) => day.name === state.day);
-    const listOfAppointmentForDay = currentDay.appointments.map((id) => state.appointments[id]);
+    const listOfAppointmentForDay = currentDay.appointments.map(
+      (id) => state.appointments[id]
+    );
 
-    const emptyAppointmentsList = listOfAppointmentForDay.filter(((appointment) => appointment.interview === null));
+    const emptyAppointmentsList = listOfAppointmentForDay.filter(
+      (appointment) => appointment.interview === null
+    );
     const spots = emptyAppointmentsList.length;
 
-    const newCurrentDay = {...currentDay, spots};
+    const newCurrentDay = { ...currentDay, spots };
     const newDays = [...state.days];
 
-    const indexOfCurrentDay = newDays.findIndex((day) => day.name === state.day);
+    const indexOfCurrentDay = newDays.findIndex(
+      (day) => day.name === state.day
+    );
     newDays[indexOfCurrentDay] = newCurrentDay;
 
-    const newState = {...state, days: newDays};
-    return newState
+    const newState = { ...state, days: newDays };
+    return newState;
   };
 
   function bookInterview(id, interview) {
@@ -54,7 +60,7 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    const newState = {...state, appointments};
+    const newState = { ...state, appointments };
     const newStateWithSpots = updateSpots(newState);
 
     return Axios.put(`/api/appointments/${id}`, { interview }).then((res) => {
@@ -74,7 +80,7 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    const newState = {...state, appointments};
+    const newState = { ...state, appointments };
     const newStateWithSpots = updateSpots(newState);
 
     return Axios.delete(`/api/appointments/${id}`).then((res) => {
