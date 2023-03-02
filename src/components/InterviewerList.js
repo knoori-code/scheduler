@@ -6,6 +6,7 @@ import propTypes from "prop-types";
 export default function InterviewerList(props) {
   const { interviewers, onInterviewerChange, value } = props;
 
+  // Creates an array of interviewers used to render a list on the page
   const interviewerArray = interviewers.map((selectedInterviewer) => {
     return (
       <InterviewerListItem

@@ -12,6 +12,7 @@ export default function Form(props) {
     setInterviewer(null);
   };
 
+  // Removes error message and returns to previous mode
   const cancel = function () {
     setError("");
     reset();
@@ -19,6 +20,7 @@ export default function Form(props) {
     props.onCancel();
   };
 
+  // Checks if name is entered into input field and if interviewer is selected
   function validate() {
     if (student === "") {
       setError("Student name cannot be blank");

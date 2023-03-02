@@ -25,6 +25,7 @@ export default function Appointment(props) {
 
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
+  // Saves interview information transitions to show mode
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -38,6 +39,7 @@ export default function Appointment(props) {
       .catch(() => transition(ERROR_SAVE, true));
   }
 
+  // Deletes interview and displays empty mode
   function confirm() {
     transition(DELETING, true);
 
